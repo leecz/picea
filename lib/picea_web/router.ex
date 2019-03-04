@@ -20,7 +20,9 @@ defmodule PiceaWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", PiceaWeb do
-  #   pipe_through :api
-  # end
+  scope "/api/v1", PiceaWeb do
+    pipe_through :api
+
+    resources "/users", UserController, only: [:create, :show]
+  end
 end
