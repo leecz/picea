@@ -27,4 +27,9 @@ config :phoenix, :json_library, Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
+
+config :picea, Picea.Guardian,
+  issuer: "picea",
+  secret_key: "zc4CdebhPzSgx+DlMyZQo3JYbitLws/YweJmnpin76B9JjP8+V8uSiBcwOjfwi1c"
+
 import_config "#{Mix.env()}.exs"

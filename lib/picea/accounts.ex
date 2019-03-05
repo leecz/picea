@@ -8,6 +8,8 @@ defmodule Picea.Accounts do
 
   alias Picea.Accounts.User
 
+  alias Picea.Guardian
+
   @doc """
   Returns the list of users.
 
@@ -36,6 +38,17 @@ defmodule Picea.Accounts do
 
   """
   def get_user!(id), do: Repo.get!(User, id)
+
+  def get_by_username(username) when is_binary(username) do
+    case Repo.get_by(User, username: username) do
+      nil ->
+        Argon2.no_user_verify()
+        {:error, "找不到用户"}
+
+      user ->
+        {:ok, user}
+    end
+  end
 
   @doc """
   Creates a user.
@@ -100,5 +113,25 @@ defmodule Picea.Accounts do
   """
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+  def token_sign_in(username, password) do
+    with {:ok, user} <- username_password_auth(username, password) do
+      Guardian.encode_and_sign(user)
+    end
+  end
+
+  defp username_password_auth(username, password) do
+    with {:ok, user} <- get_by_username(username) do
+      verify_password(password, user)
+    end
+  end
+
+  defp verify_password(password, %User{} = user) do
+    if Argon2.verify_pass(password, user.password_hash) do
+      {:ok, user}
+    else
+      {:error, :invalid_password}
+    end
   end
 end

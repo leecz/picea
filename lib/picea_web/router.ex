@@ -1,5 +1,6 @@
 defmodule PiceaWeb.Router do
   use PiceaWeb, :router
+  alias Picea.Guardian
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,6 +14,10 @@ defmodule PiceaWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :jwt_authenticated do
+    plug Guardian.AuthPipeline
+  end
+
   scope "/", PiceaWeb do
     pipe_through :browser
 
@@ -23,6 +28,14 @@ defmodule PiceaWeb.Router do
   scope "/api/v1", PiceaWeb do
     pipe_through :api
 
-    resources "/users", UserController, only: [:create, :show]
+    # resources "/users", UserController, only: [:create, :show]
+    post "/sign_up", UserController, :create
+    post "/sign_in", UserController, :sign_in
+  end
+
+  scope "/api/v1", PiceaWeb do
+    pipe_through [:api, :jwt_authenticated]
+
+    get "/users", UserController, :index
   end
 end

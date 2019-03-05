@@ -19,4 +19,10 @@ defmodule PiceaWeb.FallbackController do
     |> put_view(PiceaWeb.ErrorView)
     |> render(:"404")
   end
+
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{message: "用户名密码错误"})
+  end
 end

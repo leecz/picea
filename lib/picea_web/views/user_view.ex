@@ -13,4 +13,8 @@ defmodule PiceaWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id, username: user.username, inserted_at: user.inserted_at}
   end
+
+  def render("jwt.json", %{jwt: jwt}) do
+    %{jwt: jwt}
+  end
 end
