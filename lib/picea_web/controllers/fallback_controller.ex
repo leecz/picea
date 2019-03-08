@@ -23,6 +23,18 @@ defmodule PiceaWeb.FallbackController do
   def call(conn, {:error, :unauthorized}) do
     conn
     |> put_status(:unauthorized)
+    |> json(%{message: "用户为授权"})
+  end
+
+  def call(conn, {:error, :invalid_user}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{message: "用户名密码错误"})
+  end
+
+  def call(conn, {:error, :invalid_password}) do
+    conn
+    |> put_status(:unauthorized)
     |> json(%{message: "用户名密码错误"})
   end
 end

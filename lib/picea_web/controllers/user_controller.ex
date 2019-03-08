@@ -21,12 +21,12 @@ defmodule PiceaWeb.UserController do
   end
 
   def sign_in(conn, %{"username" => username, "password" => password}) do
-    case Accounts.token_sign_in(username, password) do
-      {:ok, token, _claims} ->
-        conn |> render("jwt.json", jwt: token)
-
-      _ ->
-        {:error, :unauthorized}
+    with {:ok, user} <- Accounts.username_password_auth(username, password),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
+      conn |> render("jwt.json", user: Map.put(user, :token, token))
+    else
+      {:error, _} ->
+        {:error, :invalid_user}
     end
   end
 

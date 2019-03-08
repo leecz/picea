@@ -42,5 +42,6 @@ defmodule PiceaWeb.Endpoint do
     key: "_picea_key",
     signing_salt: "5ZkxlFvG"
 
+  plug CORSPlug
   plug PiceaWeb.Router
 end
