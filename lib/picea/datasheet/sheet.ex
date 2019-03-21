@@ -13,7 +13,7 @@ defmodule Picea.Datasheet.Sheet do
   @doc false
   def changeset(sheet, attrs) do
     sheet
-    |> cast(attrs, [:name, :data])
-    |> validate_required([:name, :data])
+    |> cast(attrs, [:name, :data, :user_id])
+    |> validate_required([:name, :data, :user_id])
   end
 end

@@ -31,13 +31,13 @@ defmodule PiceaWeb.Router do
     # resources "/users", UserController, only: [:create, :show]
     post "/sign_up", UserController, :create
     post "/sign_in", UserController, :sign_in
-    resources "/sheets", SheetController, except: [:new, :edit]
   end
 
   scope "/api/v1", PiceaWeb do
     pipe_through [:api, :jwt_authenticated]
 
     get "/users", UserController, :index
+    resources "/sheets", SheetController, except: [:new, :edit]
     # resources "/sheets", SheetController, except: [:new, :edit]
   end
 end

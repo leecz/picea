@@ -11,8 +11,6 @@ defmodule PiceaWeb.SheetView do
   end
 
   def render("sheet.json", %{sheet: sheet}) do
-    %{id: sheet.id,
-      name: sheet.name,
-      data: sheet.data}
+    %{id: sheet.id, name: sheet.name, data: sheet.data, inserted_at: sheet.inserted_at}
   end
 end

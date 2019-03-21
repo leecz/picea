@@ -7,12 +7,16 @@ defmodule PiceaWeb.SheetController do
   action_fallback PiceaWeb.FallbackController
 
   def index(conn, _params) do
-    sheets = Datasheet.list_sheets()
+    user = Picea.Guardian.Plug.current_resource(conn)
+    sheets = Datasheet.list_sheets(user)
     render(conn, "index.json", sheets: sheets)
   end
 
   def create(conn, %{"sheet" => sheet_params}) do
-    with {:ok, %Sheet{} = sheet} <- Datasheet.create_sheet(sheet_params) do
+    user = Picea.Guardian.Plug.current_resource(conn)
+
+    with {:ok, %Sheet{} = sheet} <-
+           Datasheet.create_sheet(Map.merge(sheet_params, %{"user_id" => user.id})) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.sheet_path(conn, :show, sheet))
