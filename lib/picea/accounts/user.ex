@@ -10,6 +10,7 @@ defmodule Picea.Accounts.User do
     field :password_confirmation, :string, virtual: true
 
     has_many(:sheets, Picea.Datasheet.Sheet)
+    has_many(:charts, Picea.Charts.Chart)
 
     timestamps()
   end
