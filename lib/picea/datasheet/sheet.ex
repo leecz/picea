@@ -5,6 +5,7 @@ defmodule Picea.Datasheet.Sheet do
   schema "sheets" do
     field :data, :map
     field :name, :string
+    field :data_type, :string, default: "sheet"
     belongs_to(:user, Picea.Accounts.User)
 
     timestamps()
@@ -13,7 +14,7 @@ defmodule Picea.Datasheet.Sheet do
   @doc false
   def changeset(sheet, attrs) do
     sheet
-    |> cast(attrs, [:name, :data, :user_id])
+    |> cast(attrs, [:name, :data, :user_id, :data_type])
     |> validate_required([:name, :data, :user_id])
   end
 end
