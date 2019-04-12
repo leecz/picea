@@ -16,5 +16,6 @@ defmodule Picea.Datasheet.Sheet do
     sheet
     |> cast(attrs, [:name, :data, :user_id, :data_type])
     |> validate_required([:name, :data, :user_id])
+    |> validate_inclusion(:data_type, ["sheet", "json"])
   end
 end
