@@ -106,4 +106,105 @@ defmodule Picea.Charts do
   def change_chart(%Chart{} = chart) do
     Chart.changeset(chart, %{})
   end
+
+  alias Picea.Charts.Dchart
+
+  @doc """
+  Returns the list of dcharts.
+
+  ## Examples
+
+      iex> list_dcharts()
+      [%Dchart{}, ...]
+
+  """
+  def list_dcharts(%User{} = user) do
+    Repo.all(from c in Dchart, where: c.user_id == ^user.id)
+  end
+
+  def list_dcharts do
+    Repo.all(Dchart)
+  end
+
+  @doc """
+  Gets a single dchart.
+
+  Raises `Ecto.NoResultsError` if the Dchart does not exist.
+
+  ## Examples
+
+      iex> get_dchart!(123)
+      %Dchart{}
+
+      iex> get_dchart!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_dchart!(id), do: Repo.get!(Dchart, id)
+
+  @doc """
+  Creates a dchart.
+
+  ## Examples
+
+      iex> create_dchart(%{field: value})
+      {:ok, %Dchart{}}
+
+      iex> create_dchart(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_dchart(attrs \\ %{}) do
+    IO.puts("-----------------------------------\n")
+    %Dchart{}
+    |> Dchart.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a dchart.
+
+  ## Examples
+
+      iex> update_dchart(dchart, %{field: new_value})
+      {:ok, %Dchart{}}
+
+      iex> update_dchart(dchart, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_dchart(%Dchart{} = dchart, attrs) do
+    dchart
+    |> Dchart.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Dchart.
+
+  ## Examples
+
+      iex> delete_dchart(dchart)
+      {:ok, %Dchart{}}
+
+      iex> delete_dchart(dchart)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_dchart(%Dchart{} = dchart) do
+    Repo.delete(dchart)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking dchart changes.
+
+  ## Examples
+
+      iex> change_dchart(dchart)
+      %Ecto.Changeset{source: %Dchart{}}
+
+  """
+  def change_dchart(%Dchart{} = dchart) do
+    Dchart.changeset(dchart, %{})
+  end
 end

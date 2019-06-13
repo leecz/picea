@@ -39,6 +39,7 @@ defmodule PiceaWeb.Router do
     get "/users", UserController, :index
     resources "/sheets", SheetController, except: [:new, :edit]
     resources "/charts", ChartController, except: [:new, :edit]
+    resources "/dcharts", DchartController, except: [:new, :edit]
     # resources "/sheets", SheetController, except: [:new, :edit]
   end
 end

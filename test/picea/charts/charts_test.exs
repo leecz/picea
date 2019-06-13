@@ -67,4 +67,69 @@ defmodule Picea.ChartsTest do
       assert %Ecto.Changeset{} = Charts.change_chart(chart)
     end
   end
+
+  describe "dcharts" do
+    alias Picea.Charts.Dchart
+
+    @valid_attrs %{data: %{}, name: "some name", option: %{}, user_id: 42}
+    @update_attrs %{data: %{}, name: "some updated name", option: %{}, user_id: 43}
+    @invalid_attrs %{data: nil, name: nil, option: nil, user_id: nil}
+
+    def dchart_fixture(attrs \\ %{}) do
+      {:ok, dchart} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Charts.create_dchart()
+
+      dchart
+    end
+
+    test "list_dcharts/0 returns all dcharts" do
+      dchart = dchart_fixture()
+      assert Charts.list_dcharts() == [dchart]
+    end
+
+    test "get_dchart!/1 returns the dchart with given id" do
+      dchart = dchart_fixture()
+      assert Charts.get_dchart!(dchart.id) == dchart
+    end
+
+    test "create_dchart/1 with valid data creates a dchart" do
+      assert {:ok, %Dchart{} = dchart} = Charts.create_dchart(@valid_attrs)
+      assert dchart.data == %{}
+      assert dchart.name == "some name"
+      assert dchart.option == %{}
+      assert dchart.user_id == 42
+    end
+
+    test "create_dchart/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Charts.create_dchart(@invalid_attrs)
+    end
+
+    test "update_dchart/2 with valid data updates the dchart" do
+      dchart = dchart_fixture()
+      assert {:ok, %Dchart{} = dchart} = Charts.update_dchart(dchart, @update_attrs)
+      assert dchart.data == %{}
+      assert dchart.name == "some updated name"
+      assert dchart.option == %{}
+      assert dchart.user_id == 43
+    end
+
+    test "update_dchart/2 with invalid data returns error changeset" do
+      dchart = dchart_fixture()
+      assert {:error, %Ecto.Changeset{}} = Charts.update_dchart(dchart, @invalid_attrs)
+      assert dchart == Charts.get_dchart!(dchart.id)
+    end
+
+    test "delete_dchart/1 deletes the dchart" do
+      dchart = dchart_fixture()
+      assert {:ok, %Dchart{}} = Charts.delete_dchart(dchart)
+      assert_raise Ecto.NoResultsError, fn -> Charts.get_dchart!(dchart.id) end
+    end
+
+    test "change_dchart/1 returns a dchart changeset" do
+      dchart = dchart_fixture()
+      assert %Ecto.Changeset{} = Charts.change_dchart(dchart)
+    end
+  end
 end
