@@ -11,11 +11,14 @@ defmodule PiceaWeb.DchartView do
   end
 
   def render("dchart.json", %{dchart: dchart}) do
-    %{id: dchart.id,
+    %{
+      id: dchart.id,
       name: dchart.name,
       option: dchart.option,
       data: dchart.data,
       type: dchart.type,
-      user_id: dchart.user_id}
+      thumb: dchart.thumb,
+      user_id: dchart.user_id
+    }
   end
 end

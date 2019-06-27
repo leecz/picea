@@ -155,7 +155,6 @@ defmodule Picea.Charts do
 
   """
   def create_dchart(attrs \\ %{}) do
-    IO.puts("-----------------------------------\n")
     %Dchart{}
     |> Dchart.changeset(attrs)
     |> Repo.insert()
